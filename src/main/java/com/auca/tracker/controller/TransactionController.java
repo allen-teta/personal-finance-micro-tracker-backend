@@ -1,11 +1,13 @@
 package com.auca.tracker.controller;
 
 import com.auca.tracker.model.Transaction;
+import com.auca.tracker.model.TransactionStatus;
 import com.auca.tracker.service.TransactionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,6 +29,16 @@ public class TransactionController {
     @GetMapping("/all")
     public List<Transaction> all() {
         return service.getAll();
+    }
+
+    @GetMapping("/by-status")
+    public List<Transaction> byStatus(@RequestParam TransactionStatus status) {
+        return service.getByStatus(status);
+    }
+
+    @GetMapping("/between")
+    public List<Transaction> between(@RequestParam String start, @RequestParam String end) {
+        return service.getBetween(LocalDate.parse(start), LocalDate.parse(end));
     }
 
     @GetMapping("/{id}")

@@ -51,4 +51,9 @@ public class AccountHolderService {
         repo.deleteById(id);
         return "Account holder deleted successfully";
     }
+
+    // B1
+    public List<AccountHolder> getByLastName(String lastName) {
+        return repo.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
 }

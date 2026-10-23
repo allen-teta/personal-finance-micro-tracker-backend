@@ -1,9 +1,11 @@
 package com.auca.tracker.service;
 
 import com.auca.tracker.model.Transaction;
+import com.auca.tracker.model.TransactionStatus;
 import com.auca.tracker.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -51,5 +53,15 @@ public class TransactionService {
         }
         repo.deleteById(id);
         return "Transaction deleted successfully";
+    }
+
+    // B2
+    public List<Transaction> getByStatus(TransactionStatus status) {
+        return repo.findByStatusOrderByTransactionDateAsc(status);
+    }
+
+    // B3
+    public List<Transaction> getBetween(LocalDate start, LocalDate end) {
+        return repo.findByTransactionDateBetweenOrderByTransactionDateAsc(start, end);
     }
 }

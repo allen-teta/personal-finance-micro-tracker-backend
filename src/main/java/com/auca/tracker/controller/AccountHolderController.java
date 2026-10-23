@@ -29,6 +29,11 @@ public class AccountHolderController {
         return service.getAll();
     }
 
+    @GetMapping("/by-last-name")
+    public List<AccountHolder> byLastName(@RequestParam String lastName) {
+        return service.getByLastName(lastName);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Object> get(@PathVariable UUID id) {
         Optional<AccountHolder> found = service.getById(id);
