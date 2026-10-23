@@ -1,0 +1,58 @@
+package com.auca.tracker.controller;
+
+import com.auca.tracker.model.Transaction;
+import com.auca.tracker.service.TransactionService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/api/transactions")
+public class TransactionController {
+    private final TransactionService service;
+
+    public TransactionController(TransactionService service) {
+        this.service = service;
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<String> save(@RequestBody Transaction x) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(x));
+    }
+
+    @GetMapping("/all")
+    public List<Transaction> all() {
+        return service.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> get(@PathVariable UUID id) {
+        Optional<Transaction> found = service.getById(id);
+        if (found.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The transaction with that id does not exist");
+        }
+        return ResponseEntity.ok(found.get());
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody Transaction x) {
+        String message = service.update(id, x);
+        if (message.contains("does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        return ResponseEntity.ok(message);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable UUID id) {
+        String message = service.delete(id);
+        if (message.contains("does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        return ResponseEntity.ok(message);
+    }
+}
