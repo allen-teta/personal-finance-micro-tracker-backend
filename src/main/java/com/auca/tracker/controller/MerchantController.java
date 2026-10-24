@@ -52,6 +52,28 @@ public class MerchantController {
         return ResponseEntity.ok(message);
     }
 
+    @PutMapping("/{merchantId}/spending-categories/{spendingCategoryId}")
+    public ResponseEntity<String> addSpendingCategory(@PathVariable UUID merchantId, @PathVariable UUID spendingCategoryId) {
+        String message = service.addSpendingCategory(merchantId, spendingCategoryId);
+        if (message.contains("does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        } else if (message.contains("already has")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        return ResponseEntity.ok(message);
+    }
+
+    @PatchMapping("/{merchantId}/merchant-code")
+    public ResponseEntity<String> changeMerchantCode(@PathVariable UUID merchantId, @RequestParam int codeNumber) {
+        String message = service.changeMerchantCode(merchantId, codeNumber);
+        if (message.contains("does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        } else if (message.contains("taken")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        return ResponseEntity.ok(message);
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id) {
         String message = service.delete(id);

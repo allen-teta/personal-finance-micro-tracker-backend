@@ -23,7 +23,13 @@ public class TransactionController {
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Transaction x) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(x));
+        String message = service.save(x);
+        if (message.contains("cannot be in the past") || message.contains("is required")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        } else if (message.contains("already has")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
     @GetMapping("/all")
@@ -55,6 +61,17 @@ public class TransactionController {
         String message = service.update(id, x);
         if (message.contains("does not exist")) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        return ResponseEntity.ok(message);
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<String> changeStatus(@PathVariable UUID id, @RequestParam TransactionStatus status) {
+        String message = service.changeStatus(id, status);
+        if (message.contains("does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        } else if (message.startsWith("Cannot change")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
         }
         return ResponseEntity.ok(message);
     }

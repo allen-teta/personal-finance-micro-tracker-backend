@@ -14,4 +14,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, UUID> 
 
     // B3: DERIVED (Between, inclusive)
     List<Transaction> findByTransactionDateBetweenOrderByTransactionDateAsc(LocalDate start, LocalDate end);
+
+    // D1: DERIVED (existsBy, And, Not)
+    boolean existsByMerchantIdAndTransactionDateAndStatusNot(UUID merchantId, LocalDate transactionDate, TransactionStatus status);
 }
