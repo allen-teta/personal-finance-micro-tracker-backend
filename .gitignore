@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+run.ps1

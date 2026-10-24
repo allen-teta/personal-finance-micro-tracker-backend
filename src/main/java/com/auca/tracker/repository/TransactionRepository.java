@@ -30,4 +30,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, UUID> 
     @Query("UPDATE Transaction t SET t.status = :ignored WHERE t.merchant.id = :merchantId AND t.transactionDate = :date AND t.status <> :reviewed")
     int cancelDay(@Param("merchantId") UUID merchantId, @Param("date") LocalDate date,
                   @Param("ignored") TransactionStatus ignored, @Param("reviewed") TransactionStatus reviewed);
+
+    // Bonus dashboard: DERIVED countBy
+    long countByStatus(TransactionStatus status);
+
+    long countByTransactionDate(LocalDate transactionDate);
 }
