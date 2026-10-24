@@ -29,6 +29,11 @@ public class MerchantController {
         return service.getAll();
     }
 
+    @GetMapping("/by-spending-category")
+    public List<Merchant> bySpendingCategory(@RequestParam String name) {
+        return service.getBySpendingCategory(name);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Object> get(@PathVariable UUID id) {
         Optional<Merchant> found = service.getById(id);

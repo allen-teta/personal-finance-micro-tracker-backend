@@ -51,4 +51,9 @@ public class MerchantService {
         repo.deleteById(id);
         return "Merchant deleted successfully";
     }
+
+    // C1
+    public List<Merchant> getBySpendingCategory(String name) {
+        return repo.findBySpendingCategoryName(name);
+    }
 }

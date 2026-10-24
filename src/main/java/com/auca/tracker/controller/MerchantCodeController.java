@@ -29,6 +29,11 @@ public class MerchantCodeController {
         return service.getAll();
     }
 
+    @GetMapping("/free")
+    public List<MerchantCode> free() {
+        return service.getFree();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Object> get(@PathVariable UUID id) {
         Optional<MerchantCode> found = service.getById(id);

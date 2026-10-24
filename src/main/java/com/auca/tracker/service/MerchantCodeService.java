@@ -49,4 +49,9 @@ public class MerchantCodeService {
         repo.deleteById(id);
         return "Merchant code deleted successfully";
     }
+
+    // C2
+    public List<MerchantCode> getFree() {
+        return repo.findFree();
+    }
 }

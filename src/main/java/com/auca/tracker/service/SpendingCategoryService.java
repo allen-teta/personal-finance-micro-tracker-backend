@@ -48,4 +48,9 @@ public class SpendingCategoryService {
         repo.deleteById(id);
         return "Spending category deleted successfully";
     }
+
+    // C3
+    public List<SpendingCategory> getUnused() {
+        return repo.findUnused();
+    }
 }

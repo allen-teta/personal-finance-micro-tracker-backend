@@ -2,6 +2,7 @@ package com.auca.tracker.service;
 
 import com.auca.tracker.model.AccountHolder;
 import com.auca.tracker.repository.AccountHolderRepository;
+import com.auca.tracker.repository.MerchantRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +12,11 @@ import java.util.UUID;
 @Service
 public class AccountHolderService {
     private final AccountHolderRepository repo;
+    private final MerchantRepository merchantRepo;
 
-    public AccountHolderService(AccountHolderRepository repo) {
+    public AccountHolderService(AccountHolderRepository repo, MerchantRepository merchantRepo) {
         this.repo = repo;
+        this.merchantRepo = merchantRepo;
     }
 
     public String save(AccountHolder x) {
@@ -55,5 +58,13 @@ public class AccountHolderService {
     // B1
     public List<AccountHolder> getByLastName(String lastName) {
         return repo.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
+    // C4: empty Optional = the merchant does not exist
+    public Optional<List<AccountHolder>> getOfMerchant(UUID merchantId) {
+        if (!merchantRepo.existsById(merchantId)) {
+            return Optional.empty();
+        }
+        return Optional.of(repo.findByMerchantId(merchantId));
     }
 }

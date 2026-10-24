@@ -29,6 +29,11 @@ public class SpendingCategoryController {
         return service.getAll();
     }
 
+    @GetMapping("/unused")
+    public List<SpendingCategory> unused() {
+        return service.getUnused();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Object> get(@PathVariable UUID id) {
         Optional<SpendingCategory> found = service.getById(id);

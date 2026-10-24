@@ -34,6 +34,15 @@ public class AccountHolderController {
         return service.getByLastName(lastName);
     }
 
+    @GetMapping("/of-merchant/{merchantId}")
+    public ResponseEntity<Object> ofMerchant(@PathVariable UUID merchantId) {
+        Optional<List<AccountHolder>> result = service.getOfMerchant(merchantId);
+        if (result.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The merchant with that id does not exist");
+        }
+        return ResponseEntity.ok(result.get());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Object> get(@PathVariable UUID id) {
         Optional<AccountHolder> found = service.getById(id);
