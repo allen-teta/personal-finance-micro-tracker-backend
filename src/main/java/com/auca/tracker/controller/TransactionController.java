@@ -81,6 +81,8 @@ public class TransactionController {
         String message = service.delete(id);
         if (message.contains("does not exist")) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        } else if (message.contains("has receipt lines")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
         return ResponseEntity.ok(message);
     }

@@ -2,6 +2,7 @@ package com.auca.tracker.service;
 
 import com.auca.tracker.model.Transaction;
 import com.auca.tracker.model.TransactionStatus;
+import com.auca.tracker.repository.ReceiptLineRepository;
 import com.auca.tracker.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,11 @@ import java.util.UUID;
 @Service
 public class TransactionService {
     private final TransactionRepository repo;
+    private final ReceiptLineRepository receiptLineRepo;
 
-    public TransactionService(TransactionRepository repo) {
+    public TransactionService(TransactionRepository repo, ReceiptLineRepository receiptLineRepo) {
         this.repo = repo;
+        this.receiptLineRepo = receiptLineRepo;
     }
 
     // D1: safe saving
@@ -61,9 +64,14 @@ public class TransactionService {
         return "Transaction updated successfully";
     }
 
+    // E3: a transaction with receipt lines cannot be deleted
     public String delete(UUID id) {
-        if (!repo.existsById(id)) {
+        Optional<Transaction> found = repo.findById(id);
+        if (found.isEmpty()) {
             return "The transaction with that id does not exist";
+        }
+        if (receiptLineRepo.existsByTransaction(found.get())) {
+            return "That transaction has receipt lines, delete them first";
         }
         repo.deleteById(id);
         return "Transaction deleted successfully";
