@@ -16,7 +16,7 @@ Java 17, Spring Boot, Spring Web, Spring Data JPA, PostgreSQL 17, Maven wrapper.
 
 1. Create the database: `psql -U postgres -c "CREATE DATABASE finance_tracker;"`
 2. Set the connection variables (PowerShell, use your own password): `$env:DB_URL = "jdbc:postgresql://localhost:5432/finance_tracker"`, `$env:DB_USER = "postgres"`, `$env:DB_PASSWORD = "your password"`
-3. Start the API with `.\mvnw spring-boot:run` (on Linux or macOS: `./mvnw spring-boot:run` with `export` for the variables). Tables are created on first start (`ddl-auto=update`).
+3. Start the API with `.\mvnw spring-boot:run` (Linux or macOS: `./mvnw spring-boot:run` with `export` for the variables). Tables are created on first start (`ddl-auto=update`).
 4. Optional: to load the seed data into a fresh database, start the API once so the tables exist, stop it, then run `psql -U postgres -d finance_tracker -f seed-data.sql`.
 
 The API listens on http://localhost:8080.

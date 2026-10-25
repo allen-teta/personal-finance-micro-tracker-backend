@@ -1,0 +1,475 @@
+{
+    "info":  {
+                 "name":  "personal-finance-micro-tracker-midterm",
+                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+             },
+    "variable":  [
+                     {
+                         "key":  "baseUrl",
+                         "value":  "http://localhost:8080"
+                     },
+                     {
+                         "key":  "unknownId",
+                         "value":  "00000000-0000-0000-0000-000000000000"
+                     },
+                     {
+                         "key":  "accountNumber",
+                         "value":  "ACC-2026-001"
+                     },
+                     {
+                         "key":  "spendingCategoryId",
+                         "value":  "PASTE-ID"
+                     },
+                     {
+                         "key":  "demoCategoryId",
+                         "value":  "PASTE-ID"
+                     },
+                     {
+                         "key":  "merchantId",
+                         "value":  "PASTE-ID"
+                     },
+                     {
+                         "key":  "accountHolderId",
+                         "value":  "PASTE-ID"
+                     },
+                     {
+                         "key":  "importedTransactionId",
+                         "value":  "PASTE-ID"
+                     },
+                     {
+                         "key":  "reviewedTransactionId",
+                         "value":  "PASTE-ID"
+                     },
+                     {
+                         "key":  "receiptLineId",
+                         "value":  "PASTE-ID"
+                     }
+                 ],
+    "event":  [
+                  {
+                      "script":  {
+                                     "exec":  [
+                                                  "pm.collectionVariables.set(\"today\", new Date().toISOString().slice(0,10));"
+                                              ],
+                                     "type":  "text/javascript"
+                                 },
+                      "listen":  "prerequest"
+                  }
+              ],
+    "item":  [
+                 {
+                     "name":  "A2 save",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ],
+                                     "url":  "{{baseUrl}}/api/spending-categories/save",
+                                     "body":  {
+                                                  "mode":  "raw",
+                                                  "raw":  "{\"name\":\"Demo\"}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              }
+                                              }
+                                 }
+                 },
+                 {
+                     "name":  "A2 all",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/spending-categories/all"
+                                 }
+                 },
+                 {
+                     "name":  "A2 get",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/spending-categories/{{spendingCategoryId}}"
+                                 }
+                 },
+                 {
+                     "name":  "A2 update",
+                     "request":  {
+                                     "method":  "PUT",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ],
+                                     "url":  "{{baseUrl}}/api/spending-categories/update/{{spendingCategoryId}}",
+                                     "body":  {
+                                                  "mode":  "raw",
+                                                  "raw":  "{\"name\":\"Food\"}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              }
+                                              }
+                                 }
+                 },
+                 {
+                     "name":  "A2 delete",
+                     "request":  {
+                                     "method":  "DELETE",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/spending-categories/delete/{{demoCategoryId}}"
+                                 }
+                 },
+                 {
+                     "name":  "A2 error 404",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/spending-categories/{{unknownId}}"
+                                 }
+                 },
+                 {
+                     "name":  "B1",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/account-holders/by-last-name?lastName=keza"
+                                 }
+                 },
+                 {
+                     "name":  "B2",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/transactions/by-status?status=IMPORTED"
+                                 }
+                 },
+                 {
+                     "name":  "B3",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/transactions/between?start=2026-10-01\u0026end=2026-10-31"
+                                 }
+                 },
+                 {
+                     "name":  "C1",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/merchants/by-spending-category?name=food"
+                                 }
+                 },
+                 {
+                     "name":  "C2",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/merchant-codes/free"
+                                 }
+                 },
+                 {
+                     "name":  "C3",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/spending-categories/unused"
+                                 }
+                 },
+                 {
+                     "name":  "C4",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/account-holders/of-merchant/{{merchantId}}"
+                                 }
+                 },
+                 {
+                     "name":  "C4 error 404",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/account-holders/of-merchant/{{unknownId}}"
+                                 }
+                 },
+                 {
+                     "name":  "D1",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ],
+                                     "url":  "{{baseUrl}}/api/transactions/save",
+                                     "body":  {
+                                                  "mode":  "raw",
+                                                  "raw":  "{\"transactionDate\":\"{{today}}\",\"amount\":100,\"rawLine\":\"Demo payment\",\"accountHolder\":{\"id\":\"{{accountHolderId}}\"},\"merchant\":{\"id\":\"{{merchantId}}\"}}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              }
+                                              }
+                                 }
+                 },
+                 {
+                     "name":  "D1 error 409 (run D1 first)",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ],
+                                     "url":  "{{baseUrl}}/api/transactions/save",
+                                     "body":  {
+                                                  "mode":  "raw",
+                                                  "raw":  "{\"transactionDate\":\"{{today}}\",\"amount\":100,\"rawLine\":\"Demo payment\",\"accountHolder\":{\"id\":\"{{accountHolderId}}\"},\"merchant\":{\"id\":\"{{merchantId}}\"}}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              }
+                                              }
+                                 }
+                 },
+                 {
+                     "name":  "D1 error 400",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ],
+                                     "url":  "{{baseUrl}}/api/transactions/save",
+                                     "body":  {
+                                                  "mode":  "raw",
+                                                  "raw":  "{\"transactionDate\":\"2020-01-01\",\"amount\":100,\"rawLine\":\"Old payment\",\"accountHolder\":{\"id\":\"{{accountHolderId}}\"},\"merchant\":{\"id\":\"{{merchantId}}\"}}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              }
+                                              }
+                                 }
+                 },
+                 {
+                     "name":  "D2",
+                     "request":  {
+                                     "method":  "PATCH",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/transactions/{{importedTransactionId}}/status?status=CATEGORIZED"
+                                 }
+                 },
+                 {
+                     "name":  "D2 error 400",
+                     "request":  {
+                                     "method":  "PATCH",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/transactions/{{reviewedTransactionId}}/status?status=IMPORTED"
+                                 }
+                 },
+                 {
+                     "name":  "D3",
+                     "request":  {
+                                     "method":  "PUT",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/merchants/{{merchantId}}/spending-categories/{{spendingCategoryId}}"
+                                 }
+                 },
+                 {
+                     "name":  "D3 error 409 (run D3 twice)",
+                     "request":  {
+                                     "method":  "PUT",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/merchants/{{merchantId}}/spending-categories/{{spendingCategoryId}}"
+                                 }
+                 },
+                 {
+                     "name":  "D3 error 404",
+                     "request":  {
+                                     "method":  "PUT",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/merchants/{{unknownId}}/spending-categories/{{spendingCategoryId}}"
+                                 }
+                 },
+                 {
+                     "name":  "D4",
+                     "request":  {
+                                     "method":  "PATCH",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/merchants/{{merchantId}}/merchant-code?codeNumber=10104"
+                                 }
+                 },
+                 {
+                     "name":  "D4 error 404",
+                     "request":  {
+                                     "method":  "PATCH",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/merchants/{{merchantId}}/merchant-code?codeNumber=99999"
+                                 }
+                 },
+                 {
+                     "name":  "E1",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ],
+                                     "url":  "{{baseUrl}}/api/receipt-lines/save?transactionId={{reviewedTransactionId}}",
+                                     "body":  {
+                                                  "mode":  "raw",
+                                                  "raw":  "{\"itemName\":\"Milk 1L\",\"comment\":\"Weekly shopping\",\"quantity\":2}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              }
+                                              }
+                                 }
+                 },
+                 {
+                     "name":  "E1 error 400",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ],
+                                     "url":  "{{baseUrl}}/api/receipt-lines/save?transactionId={{importedTransactionId}}",
+                                     "body":  {
+                                                  "mode":  "raw",
+                                                  "raw":  "{\"itemName\":\"Milk 1L\",\"comment\":\"Weekly shopping\",\"quantity\":2}",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              }
+                                              }
+                                 }
+                 },
+                 {
+                     "name":  "E2",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/receipt-lines/account-holder/{{accountNumber}}"
+                                 }
+                 },
+                 {
+                     "name":  "E3",
+                     "request":  {
+                                     "method":  "DELETE",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/receipt-lines/delete/{{receiptLineId}}"
+                                 }
+                 },
+                 {
+                     "name":  "E3 error 409",
+                     "request":  {
+                                     "method":  "DELETE",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/transactions/delete/{{reviewedTransactionId}}"
+                                 }
+                 },
+                 {
+                     "name":  "F1",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/transactions/stats/by-status"
+                                 }
+                 },
+                 {
+                     "name":  "F2",
+                     "request":  {
+                                     "method":  "PATCH",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/transactions/cancel-day?merchantId={{merchantId}}\u0026date={{today}}"
+                                 }
+                 },
+                 {
+                     "name":  "Bonus dashboard",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/dashboard/summary"
+                                 }
+                 },
+                 {
+                     "name":  "Bonus paging",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+
+                                                ],
+                                     "url":  "{{baseUrl}}/api/transactions/page?page=0\u0026size=5\u0026sort=transactionDate,desc"
+                                 }
+                 }
+             ]
+}
